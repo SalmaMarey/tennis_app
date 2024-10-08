@@ -1,11 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tennis_app/core/di.dart';
+import 'package:tennis_app/core/error/error_handler.dart';
 import 'package:tennis_app/features/auth/presentation/controllers/auth_bloc/auth_bloc.dart';
 import 'package:tennis_app/features/auth/presentation/controllers/auth_bloc/auth_event.dart';
 import 'package:tennis_app/features/auth/presentation/controllers/auth_bloc/auth_state.dart';
-import 'package:tennis_app/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:tennis_app/features/home/presentation/screens/home_screen.dart';
+import 'package:tennis_app/features/location/data/location_weather_repo_impl.dart';
 
+import '../../../location/data/datasources/remote/location_weather_data_source.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -17,7 +21,7 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool _obscureText = true; // This flag controls password visibility
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +29,27 @@ class _LogInScreenState extends State<LogInScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(200, 0, 87, 166),
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthSuccess) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
+            final locationRepo = LocationWeatherRepositoryImpl(getIt<LocationWeatherDataSource>());
+            try {
+              final position = await locationRepo.getCurrentLocation();
+
+              Navigator.of(context).pushReplacementNamed(
+                '/locationweather',
+                arguments: {
+                  'latitude': position.latitude,
+                  'longitude': position.longitude,
+                },
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error fetching location: $e')),
+              );
+            }
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            final failure = ErrorHandler.handleError(state.error);
+          ErrorHandler.showErrorDialog(context, failure.message);
           }
         },
         builder: (context, state) {
@@ -107,7 +123,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   child: TextField(
                     controller: passwordController,
-                    obscureText: _obscureText, // This controls the visibility
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
@@ -181,13 +197,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const SignUpScreen();
-                          },
-                        ),
-                      );
+                      Navigator.of(context).pushNamed('/signup');
                     },
                     child: const Text(
                       "DON'T HAVE AN ACCOUNT",

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_app/features/auth/presentation/screens/introduction_screen.dart';
 import 'package:tennis_app/features/on_boarding/presentation/controllers/on_boarding_bloc/on_boarding_event.dart';
 import 'package:tennis_app/features/on_boarding/presentation/widgets/dots_indicator_widgets.dart';
-
 import '../controllers/on_boarding_bloc/on_boarding_bloc.dart';
 import '../controllers/on_boarding_bloc/on_boarding_state.dart';
 import '../widgets/on_boarding_page.dart';
-
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -70,13 +67,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             padding: const EdgeInsets.only(right: 4.0),
                             child: TextButton(
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return const IntroductionScreen();
-                                    },
-                                  ),
-                                );
+                                Navigator.of(context).pushNamed('/intro');
                               },
                               style: TextButton.styleFrom(
                                 textStyle: const TextStyle(

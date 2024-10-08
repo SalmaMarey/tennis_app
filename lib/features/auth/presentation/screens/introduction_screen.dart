@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tennis_app/features/auth/presentation/screens/log_in_screen.dart';
-import 'package:tennis_app/features/auth/presentation/screens/sign_up_screen.dart';
+
 
 
 class IntroductionScreen extends StatelessWidget {
@@ -30,13 +29,7 @@ class IntroductionScreen extends StatelessWidget {
           const Spacer(),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const SignUpScreen();
-                  },
-                ),
-              );
+           Navigator.of(context).pushNamed('/signup');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 8, 36, 59),
@@ -58,13 +51,7 @@ class IntroductionScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const LogInScreen();
-                  },
-                ),
-              );
+              Navigator.of(context).pushNamed('/login');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
