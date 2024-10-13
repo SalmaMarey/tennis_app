@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tennis_app/features/auth/presentation/screens/introduction_screen.dart';
 import 'package:tennis_app/features/on_boarding/presentation/controllers/on_boarding_bloc/on_boarding_event.dart';
 import 'package:tennis_app/features/on_boarding/presentation/widgets/dots_indicator_widgets.dart';
-
 import '../controllers/on_boarding_bloc/on_boarding_bloc.dart';
 import '../controllers/on_boarding_bloc/on_boarding_state.dart';
 import '../widgets/on_boarding_page.dart';
-
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -28,6 +25,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return BlocProvider(
       create: (context) => OnBoardingBloc()..add(FetchOnBoardingData()),
       child: Scaffold(
@@ -55,11 +54,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: screenSize.height * 0.069,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(width: 150),
+                        SizedBox(width: screenSize.width * 0.40),
                         DotsIndicator(
                           currentIndex: _currentIndex,
                           itemCount: state.data.length,
@@ -67,16 +66,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         const Spacer(),
                         if (_currentIndex == state.data.length - 1)
                           Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
+                            padding:
+                                EdgeInsets.only(right: screenSize.width * 0.02),
                             child: TextButton(
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return const IntroductionScreen();
-                                    },
-                                  ),
-                                );
+                                Navigator.of(context).pushNamed('/intro');
                               },
                               style: TextButton.styleFrom(
                                 textStyle: const TextStyle(
@@ -95,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: screenSize.height * 0.02),
                 ],
               );
             } else if (state is OnBoardingDataError) {

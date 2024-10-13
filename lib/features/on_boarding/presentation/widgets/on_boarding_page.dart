@@ -33,7 +33,7 @@ class OnBoardingPage extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-                color:  Color.fromARGB(200, 0, 87, 166),
+                color: Color.fromARGB(200, 0, 87, 166),
                 fontWeight: FontWeight.bold,
                 fontSize: 20),
           ),
@@ -41,7 +41,7 @@ class OnBoardingPage extends StatelessWidget {
           Text(description,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  color:   Color.fromARGB(200, 0, 87, 166), fontSize: 16)),
+                  color: Color.fromARGB(200, 0, 87, 166), fontSize: 16)),
         ],
       ),
     );

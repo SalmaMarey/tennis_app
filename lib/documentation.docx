@@ -1,0 +1,99 @@
+lib/features/auth/
+Purpose: Contains the components and logic related to user authentication within the application. This feature handles user registration, login, password recovery, and session management, ensuring secure access to the app's functionalities.
+Typical Files:
+auth_bloc.dart:
+Purpose: Manages the state of the authentication process using the BLoC (Business Logic Component) pattern.
+Functionality: Handles user interactions for logging in, registering, and signing out. Emits different states such as AuthInitial, AuthLoading, AuthAuthenticated, and AuthError based on the authentication process.
+auth_event.dart:
+Purpose: Defines the events that can be triggered during the authentication process.
+Functionality: Includes events like AuthLoginRequested, AuthLogoutRequested, and AuthRegistrationRequested, which correspond to user actions in the authentication flow.
+auth_state.dart:
+Purpose: Represents the various states of the authentication process.
+Functionality: Includes states such as AuthInitial, AuthLoading, AuthAuthenticated, AuthUnauthenticated, and AuthError, which help manage the UI based on the current authentication status.
+auth_repository.dart:
+Purpose: Contains the logic for interacting with authentication services (e.g., Firebase Auth or custom APIs).
+Functionality: Handles user sign-up, sign-in, password reset, and session management by communicating with external authentication services.
+login_screen.dart:
+Purpose: The user interface for logging into the application.
+Functionality: Includes form fields for entering credentials, buttons for submitting login requests, and links for password recovery or account registration.
+registration_screen.dart:
+Purpose: The user interface for creating a new account in the application.
+Functionality: Includes form fields for entering user information, buttons for submitting registration requests, and validation messages for input errors.
+password_reset_screen.dart:
+Purpose: The user interface for password recovery or reset.
+Functionality: Provides a form for users to enter their email address to receive password reset instructions and handle the submission process.
+auth_service.dart:
+Purpose: Contains utility methods for authentication tasks.
+Functionality: Provides reusable methods for token management, session validation, and user preference handling related to authentication.
+Use Cases:
+login_use_case.dart: Handles the logic for user login.
+register_use_case.dart: Manages user registration.
+password_reset_use_case.dart: Responsible for password recovery.
+Data Sources:
+auth_remote_data_source.dart: Communicates with remote authentication services (e.g., Firebase).
+auth_local_data_source.dart: Manages local data storage (e.g., user credentials).
+
+lib/features/on_boarding/
+Purpose: Contains the components and logic for the onboarding process of the application. The onboarding feature is designed to introduce new users to the app's functionalities and guide them through the initial setup or tutorial.
+Typical Files:
+onboarding_screen.dart:
+Purpose: The main screen that presents the onboarding process to the user. It typically includes various pages that explain the app's features.
+Functionality: Displays a series of screens that users can swipe through, often including images, text descriptions, and buttons to proceed or skip.
+onboarding_bloc.dart:
+Purpose: Manages the state of the onboarding process using the BLoC (Business Logic Component) pattern.
+Functionality: Handles user interactions, such as moving to the next screen or skipping the onboarding. Emits different states (loading, completed, etc.) based on user actions.
+onboarding_event.dart:
+Purpose: Defines the events that can be triggered during the onboarding process.
+Functionality: Includes events such as starting the onboarding, moving to the next page, or skipping the onboarding entirely.
+onboarding_state.dart:
+Purpose: Represents the different states of the onboarding process.
+Functionality: Includes states like OnboardingInitial, OnboardingInProgress, and OnboardingCompleted, which help manage the UI based on the current state.
+onboarding_repository.dart:
+Purpose: Contains the logic to retrieve any data needed for the onboarding process, such as user preferences or tutorial information.
+Functionality: Interacts with local storage or APIs to fetch necessary data to personalize the onboarding experience.
+onboarding_model.dart:
+Purpose: Defines the data structure for onboarding information, such as tutorial texts, images, and order.
+Functionality: Represents the content to be displayed in each onboarding screen.
+
+lib/features/location/
+Purpose: Handles the functionality related to user location retrieval and management within the application. This feature ensures that the app can access the user's current location, perform reverse geocoding to obtain city names, and provide location data necessary for weather updates and other location-based services.
+Typical Files:
+location_bloc.dart:
+Purpose: Manages the state of location data retrieval using the BLoC (Business Logic Component) pattern.
+Functionality: Handles events related to fetching the user's current location and emits various states such as LocationInitial, LocationLoading, LocationLoaded, and LocationError based on the location retrieval process.
+location_event.dart:
+Purpose: Defines the events that can trigger location data retrieval.
+Functionality: Includes events such as GetLocationEvent, which initiates the process of obtaining the user's current location and related weather data.
+location_state.dart:
+Purpose: Represents the different states of the location data retrieval process.
+Functionality: Contains states like LocationInitial, LocationLoading, LocationLoaded, and LocationError, managing the UI's response to the current status of location data.
+get_location_repo.dart:
+Purpose: Interface for location-related data retrieval.
+Functionality: Defines methods for obtaining the user's current location and city name based on geographical coordinates.
+location_repository_impl.dart:
+Purpose: Implements the LocationRepository interface for retrieving location data.
+Functionality: Handles permissions and uses the Geolocator package to access the current location. Also includes reverse geocoding to fetch the city name from latitude and longitude coordinates.
+location_service.dart:
+Purpose: Contains utility methods for managing location-related tasks.
+Functionality: Provides reusable methods for fetching location data and processing API responses or geographical data.
+location_screen.dart:
+Purpose: The user interface for displaying location-related information.
+Functionality: Presents users with their current location details, such as city name and related weather information.
+Use Cases:
+get_current_location_use_case.dart: Retrieves the user's current location.
+reverse_geocode_use_case.dart: Converts coordinates to a human-readable location (city name).
+Data Sources:
+location_service.dart: Handles fetching the user's location using device capabilities and APIs.
+
+main.dart
+Purpose: The entry point of the application, where the main app widget is created and configured. This file initializes the app, sets up routing, applies global configurations, and manages dependencies required for the app to function correctly.
+Typical Functions and Responsibilities:
+App Initialization:
+Initializes core services such as Firebase, dependency injection (if applicable), or any other necessary configurations required for the app to run.
+Ensures that all required services are ready before the app is displayed to the user.
+Routing Setup:
+Configures the navigation structure of the application, defining routes for different screens or features.
+May include a route generator function to simplify navigation throughout the app.
+Home Screen Definition:
+Specifies the initial screen (home screen) of the app that users will see upon launch.
+This can include handling logic for displaying onboarding screens or checking user authentication status.
