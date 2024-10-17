@@ -2,10 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:tennis_app/core/models/daily_forecast.dart';
+import 'package:tennis_app/features/location/domain/location_weather_repo.dart';
 import 'package:tennis_app/features/location/domain/use_case/get_current_location.dart';
 import 'package:tennis_app/features/location/domain/use_case/get_city_name_from_coordinates.dart';
 import 'package:tennis_app/features/location/domain/use_case/get_weather.dart';
 import 'package:tennis_app/features/location/domain/use_case/get_forecast.dart';
+
 part 'get_location_event.dart';
 part 'get_location_state.dart';
 
@@ -14,12 +16,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final GetCityNameFromCoordinates getCityNameFromCoordinates;
   final GetWeather getWeather;
   final GetForecast getForecast;
+  final LocationWeatherRepository repository;
 
   LocationBloc({
     required this.getCurrentLocation,
     required this.getCityNameFromCoordinates,
     required this.getWeather,
     required this.getForecast,
+    required this.repository,
   }) : super(LocationInitial()) {
     on<GetLocationEvent>((event, emit) async {
       emit(LocationLoading());
@@ -77,6 +81,29 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
               weatherData: weatherData,
               forecast: forecastList));
         }
+      } catch (e) {
+        emit(LocationError(e as Exception));
+      }
+    });
+
+    on<GetPredictionEvent>((event, emit) async {
+      emit(LocationLoading());
+      try { 
+        final weatherData = event.weatherData;
+        int outlookRainy = weatherData['outlook'] == 'rainy' ? 1 : 0;
+        int outlookSunny = weatherData['outlook'] == 'sunny' ? 1 : 0;
+        int temperatureHot = weatherData['temperature'] == 'hot' ? 1 : 0;
+        int temperatureMild = weatherData['temperature'] == 'mild' ? 1 : 0;
+        int humidityNormal = weatherData['humidity'] == 'normal' ? 1 : 0;
+        List<int> features = [
+          outlookRainy,
+          outlookSunny,
+          temperatureHot,
+          temperatureMild,
+          humidityNormal,
+        ];
+        final prediction = await repository.getPrediction(features);
+        emit(PredictionResult(prediction));
       } catch (e) {
         emit(LocationError(e as Exception));
       }

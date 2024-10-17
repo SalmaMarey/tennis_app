@@ -97,3 +97,29 @@ May include a route generator function to simplify navigation throughout the app
 Home Screen Definition:
 Specifies the initial screen (home screen) of the app that users will see upon launch.
 This can include handling logic for displaying onboarding screens or checking user authentication status.
+
+Core Documentation for Tennis App
+1. Purpose of Core
+The core directory in the tennis app houses the foundational utilities and configurations that support the application’s essential features. This includes error handling, app routing, dependency injection, and any other cross-cutting concerns used throughout the app. The components here are generally agnostic to specific features and serve the entire application.
+2. Key Components
+Error Handling
+Location: lib/core/error/error_handler.dart
+Purpose: Centralizes error handling logic for different exceptions that occur throughout the app, including authentication, network, and weather-related issues.
+Functionality:
+handleError: Maps specific exceptions (e.g., FirebaseAuthException, http.ClientException, WeatherException) to readable error messages and HTTP codes.
+showErrorDialog: Displays an alert dialog when an error occurs, providing user-friendly feedback.
+ErrorFailure Class
+Location: lib/core/error/error_failure.dart
+Purpose: Represents a custom error object that encapsulates both an error code and a message.
+Functionality: Helps standardize error responses across different app modules, improving error tracking and debugging.
+App Routing
+Location: lib/core/routing/app_router.dart
+Purpose: Manages the navigation and route generation logic for the entire app.
+Functionality:
+generateRoute: Defines the routes and screens for the app, including onboarding, login, signup, and location-related screens.
+errorRoute: A fallback for undefined routes, displaying an error screen.
+Example Routes: /onboarding, /login, /signup, /locationweather, /details.
+Dependency Injection
+Location: lib/core/injection/dependency_injection.dart
+Purpose: Sets up the app’s dependency injection using the GetIt package.
+Functionality: Registers services like FirebaseAuth, Firestore, AuthenticationRepository, and location services, making them easily accessible throughout the app.

@@ -1,8 +1,10 @@
 # tennis_app
+Press here for the video:
 
-Fisrt Task press here:
-[![Video Thumbnail](https://i.imgur.com/2522HWH.jpeg)](https://drive.google.com/file/d/1a0OvkKiJP6uffvq2p4NsXx3X3KP-mtwE/view?usp=drive_link)
+<a href="https://drive.google.com/file/d/1lJghN_OFw0oZXWYgLAs_uv_PLZ3a7WRv/view?usp=drive_link">
+    <img src="https://i.imgur.com/X5EzD0Q.png" alt="Video Thumbnail" width="150">
+</a>
 
 
-Second Task press here:
-[![Video Thumbnail](https://i.imgur.com/670XpEU.png)](https://drive.google.com/file/d/16pVfPhsMHa2UjT7jPV_5mo-Sk6Dk7sc1/view?usp=drive_link)
+
+

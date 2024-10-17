@@ -26,4 +26,9 @@ class LocationWeatherRepositoryImpl implements LocationWeatherRepository {
   Future<Map<String, dynamic>> getForecast(String city) {
     return _dataSource.getForecast(city);
   }
+
+  @override
+  Future<int> getPrediction(List<int> features) {
+    return _dataSource.getPrediction(features);
+  }
 }

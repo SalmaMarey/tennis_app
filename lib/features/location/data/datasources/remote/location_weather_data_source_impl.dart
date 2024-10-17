@@ -76,5 +76,23 @@ class LocationWeatherDataSourceImpl implements LocationWeatherDataSource {
     } else {
       throw Exception('Failed to load forecast data');
     }
+  } @override
+  Future<int> getPrediction(List<int> features) async {
+    final url = Uri.parse('http://192.168.1.221:5001/predict');
+    Map<String, dynamic> body = {'features': features};
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(body),
+    );
+
+    if (response.statusCode == 200) {
+      final prediction = json.decode(response.body)['prediction'][0];
+      return prediction;
+    } else {
+      throw Exception('Failed to get prediction');
+    }
   }
 }
+

@@ -8,4 +8,6 @@ abstract class LocationWeatherRepository {
   // Weather methods
   Future<Map<String, dynamic>> getWeather(String city);
   Future<Map<String, dynamic>> getForecast(String city);
+
+    Future<int> getPrediction(List<int> features); 
 }

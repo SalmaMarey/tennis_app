@@ -32,8 +32,10 @@ class _LogInScreenState extends State<LogInScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) async {
           if (state is AuthSuccess) {
+            final locationDataSource = getIt<LocationWeatherDataSource>();
             final locationRepo = LocationWeatherRepositoryImpl(
-                getIt<LocationWeatherDataSource>());
+              locationDataSource,
+            );
             try {
               final position = await locationRepo.getCurrentLocation();
 

@@ -8,3 +8,8 @@ class GetLocationEvent extends LocationEvent {
 
   GetLocationEvent({required this.cityName});
 }
+class GetPredictionEvent extends LocationEvent {
+  final Map<String, String> weatherData; 
+
+  GetPredictionEvent(this.weatherData);
+}

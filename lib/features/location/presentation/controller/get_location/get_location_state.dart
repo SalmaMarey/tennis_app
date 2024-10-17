@@ -7,15 +7,9 @@ class LocationInitial extends LocationState {}
 
 class LocationLoading extends LocationState {}
 
-class LocationError extends LocationState {
-  final Exception error;
-
-  LocationError(this.error);
-}
-
 class LocationLoaded extends LocationState {
   final Position position;
-  final Map<String, dynamic> weatherData;
+  final dynamic weatherData; 
   final List<DailyForecast> forecast;
 
   LocationLoaded({
@@ -23,4 +17,16 @@ class LocationLoaded extends LocationState {
     required this.weatherData,
     required this.forecast,
   });
+}
+
+class LocationError extends LocationState {
+  final Exception error;
+
+  LocationError(this.error);
+}
+
+class PredictionResult extends LocationState {
+  final dynamic prediction;
+
+  PredictionResult(this.prediction);
 }

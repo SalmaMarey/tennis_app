@@ -22,13 +22,15 @@ void setupDependencies() {
   final firebaseAuth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
-  // Register the LocationWeatherRepository
   getIt.registerLazySingleton<LocationWeatherDataSource>(
     () => LocationWeatherDataSourceImpl(),
   );
   getIt.registerLazySingleton<LocationWeatherRepository>(
-    () => LocationWeatherRepositoryImpl(getIt<LocationWeatherDataSource>()),
+    () => LocationWeatherRepositoryImpl(
+      getIt<LocationWeatherDataSource>(),
+    ),
   );
+
   getIt.registerLazySingleton(
       () => GetCurrentLocation(getIt<LocationWeatherRepository>()));
   getIt.registerLazySingleton(
@@ -38,7 +40,6 @@ void setupDependencies() {
   getIt.registerLazySingleton(
       () => GetForecast(getIt<LocationWeatherRepository>()));
 
-  // Register the concrete implementation of AuthenticationRepository
   getIt.registerLazySingleton<AuthenticationDataSource>(
     () => AuthenticationDataSourceImpl(
       firebaseAuth: firebaseAuth,
@@ -52,6 +53,4 @@ void setupDependencies() {
       () => SignUpUseCase(getIt<AuthenticationRepository>()));
   getIt.registerLazySingleton(
       () => LogInUseCase(getIt<AuthenticationRepository>()));
-
-
 }
